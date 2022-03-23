@@ -4,6 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/default_16dp"
     tools:context=".GuestFormActivity">
-
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="@dimen/default_0dp"
+        android:layout_height="wrap_content"
+        android:hint="Nome"
+        android:textColor="@color/teal_700"
+        android:textStyle="bold"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:startIconTint="@color/teal_700"
+        app:hintTextColor="@color/teal_200"
+        app:boxStrokeColor="@color/teal_200"
+        app:counterTextColor="@color/teal_700"
+        app:startIconDrawable="@drawable/ic_baseline_person_24"
+        app:layout_constraintTop_toTopOf="parent">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/teal_700"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
