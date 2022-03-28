@@ -4,14 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/default_16dp"
     tools:context=".GuestFormActivity">
+    <include
+        android:id="@+id/toolbar_layout_huest_form"
+        layout="@layout/toolbar_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_nome_layout"
         android:layout_width="@dimen/default_0dp"
         android:layout_height="wrap_content"
         android:hint="Nome"
         android:textColor="@color/teal_700"
         android:textStyle="bold"
+        android:layout_margin="@dimen/default_16dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,11 +28,53 @@
         app:boxStrokeColor="@color/teal_200"
         app:counterTextColor="@color/teal_700"
         app:startIconDrawable="@drawable/ic_baseline_person_24"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/toolbar_layout_huest_form">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txt_nome_guest_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/teal_700"
             />
     </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/text_confirmation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Confirmação"
+        android:layout_margin="@dimen/default_16dp"
+        android:textColor="@color/teal_700"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/text_nome_layout"
+        app:layout_constraintStart_toStartOf="parent" />
+    <RadioGroup
+        android:id="@+id/btn_confrimation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_confirmation"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="@dimen/default_16dp"
+        app:layout_constraintEnd_toEndOf="parent">
+        <RadioButton
+            android:id="@+id/btn_present"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Presente"
+            android:textColor="@color/teal_700" />
+        <RadioButton
+            android:id="@+id/btn_absent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Ausente"
+            android:textColor="@color/teal_700"/>
+    </RadioGroup>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="30dp"
+        android:layout_marginTop="60dp"
+        android:text="Salvar"
+        android:backgroundTint="@color/candy_teal"
+        app:layout_constraintTop_toBottomOf="@id/btn_confrimation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
