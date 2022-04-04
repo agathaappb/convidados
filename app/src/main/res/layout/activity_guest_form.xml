@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GuestFormActivity">
+    tools:context=".view.GuestFormActivity">
     <include
         android:id="@+id/toolbar_layout_huest_form"
         layout="@layout/toolbar_view"
@@ -68,6 +68,7 @@
             android:textColor="@color/teal_700"/>
     </RadioGroup>
     <Button
+        android:id="@+id/btn_save"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="30dp"
