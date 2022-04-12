@@ -1,16 +1,27 @@
 package com.example.convidados.service.repository
 
+import android.content.Context
 import com.example.convidados.service.model.GuestModel
 
-class GuestRepository {
-    //CRUD - Create / Read / Update / Delete
+class GuestRepository private constructor(context: Context) {
 
-    //Create!
+    private val mGuestDataBaseHelper : GuestDataBaseHelper = GuestDataBaseHelper(context)
+
+    companion object{
+        private lateinit var repository : GuestRepository
+
+        fun getInstance(context: Context) : GuestRepository{
+            if(!::repository.isInitialized){
+                repository = GuestRepository(context)
+            }
+            return repository
+        }
+    }
+
     fun seveRepository(guest : GuestModel){
 
     }
 
-    //Read!
     fun getAll():List<GuestModel>{
 
         val list:MutableList<GuestModel> = ArrayList()
@@ -26,14 +37,11 @@ class GuestRepository {
 
     }
 
-    //Update
     fun update(guest : GuestModel){
 
     }
 
-    //Delete
     fun delete(guest : GuestModel){
 
     }
-
 }
