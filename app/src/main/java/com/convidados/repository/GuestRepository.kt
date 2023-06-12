@@ -61,5 +61,21 @@ class GuestRepository private constructor(context: Context) {
         }
     }
 
+    fun delete(id: Int):Boolean{
+        return try {
+            val db = guestDataBase.writableDatabase
+
+            val selection = Constants.DataBase.ID + " = ?"
+            val args = arrayOf(id.toString())
+
+            db.delete(Constants.DataBase.TABLE_NAME,selection, args)
+
+            true
+
+        }catch (e: java.lang.Exception){
+            false
+        }
+    }
+
 
 }
