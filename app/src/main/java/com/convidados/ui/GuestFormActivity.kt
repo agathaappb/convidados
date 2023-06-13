@@ -60,10 +60,11 @@ class GuestFormActivity : AppCompatActivity() {
     }
 
     private fun getData(){
+        val id = 0
         val name = binding.guestFormTextName.text.toString()
         val presence = binding.guestFormBtnPresent.isChecked
 
-        viewModel.insert(GuestModel(name,presence))
+        viewModel.insert(GuestModel(id,name,presence))
         Toast.makeText(this,"nome: ${name} | Presença: ${presence}",Toast.LENGTH_SHORT).show()
     }
 
