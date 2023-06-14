@@ -9,6 +9,10 @@ object Constants  {
         const val PRESENCE = "presence"
     }
 
+    object Bundle{
+        const val GUEST_ID = "guestid"
+    }
+
 
 
 }

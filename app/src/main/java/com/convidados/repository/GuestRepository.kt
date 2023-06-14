@@ -90,6 +90,7 @@ class GuestRepository private constructor(context: Context) {
                 Constants.DataBase.PRESENCE
             )
 
+
             val cursor = db.query(Constants.DataBase.TABLE_NAME, projection, null, null, null, null, null)
 
             if (cursor != null && cursor.count > 0){
@@ -144,6 +145,41 @@ class GuestRepository private constructor(context: Context) {
             return listGuest
         }
         return listGuest
+    }
+
+    fun getGuestId(id: Int):GuestModel?{
+        var guest:GuestModel? = null
+
+        try {
+            val db = guestDataBase.readableDatabase
+
+            val projection = arrayOf(
+                Constants.DataBase.ID,
+                Constants.DataBase.NAME,
+                Constants.DataBase.PRESENCE
+            )
+
+            val selection = Constants.DataBase.ID + " = ?"
+            val args = arrayOf(id.toString())
+
+            val cursor = db.query(Constants.DataBase.TABLE_NAME, projection, selection, args, null, null, null)
+
+            if (cursor != null && cursor.count > 0) {
+                while (cursor.moveToNext()) {
+                    val name = cursor.getString(cursor.getColumnIndex(Constants.DataBase.NAME))
+                    val presence = cursor.getInt(cursor.getColumnIndex(Constants.DataBase.PRESENCE))
+
+                    guest = GuestModel(id, name, presence == 1)
+                }
+            }
+
+            cursor.close()
+
+        }catch (e: java.lang.Exception){
+            return guest
+        }
+        return guest
+
     }
 
 

@@ -1,5 +1,6 @@
 package com.convidados.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.convidados.databinding.FragmentAllGuestsBinding
 import com.convidados.ui.adapter.GuestsAdapter
 import com.convidados.ui.listener.OnGuestListener
+import com.convidados.utils.Constants
 import com.convidados.viewModel.AllGuestsViewModel
 
 class AllGuestsFragment : Fragment() {
@@ -39,7 +41,11 @@ class AllGuestsFragment : Fragment() {
 
         val listener = object : OnGuestListener{
             override fun onClick(id:Int) {
-                Toast.makeText(requireContext(), "Click - ID: ${id}",Toast.LENGTH_SHORT).show()
+                val intent = Intent(requireActivity(),GuestFormActivity::class.java)
+                val bundle = Bundle()
+                bundle.putInt(Constants.Bundle.GUEST_ID,id)
+                intent.putExtras(bundle)
+                startActivity(intent)
             }
 
             override fun onDelete(id:Int) {
@@ -63,4 +69,10 @@ class AllGuestsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    override fun onResume() {
+        super.onResume()
+        allGuestsViewModel.getAll()
+    }
+
 }

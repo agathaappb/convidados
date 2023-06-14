@@ -7,10 +7,12 @@ import android.text.TextWatcher
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.convidados.databinding.ActivityGuestFormBinding
 import com.convidados.model.GuestModel
+import com.convidados.utils.Constants
 import com.convidados.viewModel.GuestFormViewModel
 
 
@@ -18,6 +20,7 @@ class GuestFormActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGuestFormBinding
     private lateinit var viewModel: GuestFormViewModel
+    private var id = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,18 +29,11 @@ class GuestFormActivity : AppCompatActivity() {
 
         setViewModel(this)
         setView()
-        save()
         editText()
-    }
+        observeData()
+        save()
+        getData()
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.getItemId()) {
-            R.id.home -> {
-                finish()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun setViewModel(owner: ViewModelStoreOwner){
@@ -47,8 +43,6 @@ class GuestFormActivity : AppCompatActivity() {
 
     private fun setView(){
         binding.guestFormBtnPresent.isChecked = true
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
     }
 
     private fun save(){
@@ -56,16 +50,22 @@ class GuestFormActivity : AppCompatActivity() {
             getData()
             binding.guestFormTextName.text?.clear()
             editText()
+            finish()
         }
     }
 
     private fun getData(){
-        val id = 0
         val name = binding.guestFormTextName.text.toString()
         val presence = binding.guestFormBtnPresent.isChecked
 
-        viewModel.insert(GuestModel(id,name,presence))
-        Toast.makeText(this,"nome: ${name} | Presença: ${presence}",Toast.LENGTH_SHORT).show()
+        val bundle = intent.extras
+        if (bundle != null){
+            this.id = bundle.getInt(Constants.Bundle.GUEST_ID)
+            viewModel.getGuest(id)
+            viewModel.update(GuestModel(id,name,presence))
+        }else{
+            viewModel.insert(GuestModel(id,name,presence))
+        }
     }
 
     private fun editText(){
@@ -81,6 +81,17 @@ class GuestFormActivity : AppCompatActivity() {
                 binding.guestFormBtnSave.isEnabled = !binding.guestFormTextName.text.isNullOrBlank()
             }
 
+        })
+    }
+
+    private fun observeData(){
+        viewModel.guests.observe(this, Observer {
+            binding.guestFormTextName.setText(it.name)
+            if (it.presence){
+                binding.guestFormBtnPresent.isChecked = true
+            }else{
+                binding.guestFormBtnAbsent.isChecked = true
+            }
         })
     }
 }
