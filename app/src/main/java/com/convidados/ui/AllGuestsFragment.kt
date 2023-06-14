@@ -5,9 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,13 +12,13 @@ import com.convidados.databinding.FragmentAllGuestsBinding
 import com.convidados.ui.adapter.GuestsAdapter
 import com.convidados.ui.listener.OnGuestListener
 import com.convidados.utils.Constants
-import com.convidados.viewModel.AllGuestsViewModel
+import com.convidados.viewModel.GuestsViewModel
 
 class AllGuestsFragment : Fragment() {
 
     private var _binding: FragmentAllGuestsBinding? = null
     private val binding get() = _binding!!
-    private lateinit var allGuestsViewModel: AllGuestsViewModel
+    private lateinit var guestsViewModel: GuestsViewModel
     private val adapter = GuestsAdapter()
 
     override fun onCreateView(
@@ -29,8 +26,8 @@ class AllGuestsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        allGuestsViewModel =
-            ViewModelProvider(this).get(AllGuestsViewModel::class.java)
+        guestsViewModel =
+            ViewModelProvider(this).get(GuestsViewModel::class.java)
 
         _binding = FragmentAllGuestsBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -49,16 +46,16 @@ class AllGuestsFragment : Fragment() {
             }
 
             override fun onDelete(id:Int) {
-                allGuestsViewModel.delete(id)
-                allGuestsViewModel.getAll()
+                guestsViewModel.delete(id)
+                guestsViewModel.getAll()
             }
         }
 
         adapter.attachListener(listener)
 
-        allGuestsViewModel.getAll()
+        guestsViewModel.getAll()
 
-        allGuestsViewModel.guests.observe(viewLifecycleOwner) {
+        guestsViewModel.guests.observe(viewLifecycleOwner) {
             adapter.updateGuests(it)
 
         }
@@ -72,7 +69,7 @@ class AllGuestsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        allGuestsViewModel.getAll()
+        guestsViewModel.getAll()
     }
 
 }
